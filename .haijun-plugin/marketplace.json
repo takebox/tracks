@@ -1,0 +1,73 @@
+{
+  "name": "juglow-agent-tracks",
+  "owner": {
+    "name": "Keith Lazuka",
+    "email": "klazuka@juglow.com"
+  },
+  "metadata": {
+    "description": "Juglow example tracks",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "document-tracks",
+      "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
+      "source": "./",
+      "strict": false,
+      "tracks": [
+        "./tracks/xlsx",
+        "./tracks/docx",
+        "./tracks/pptx",
+        "./tracks/pdf"
+      ]
+    },
+    {
+      "name": "example-tracks",
+      "description": "Collection of example tracks demonstrating various capabilities including track creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
+      "source": "./",
+      "strict": false,
+      "tracks": [
+        "./tracks/algorithmic-art",
+        "./tracks/brand-guidelines",
+        "./tracks/canvas-design",
+        "./tracks/doc-coauthoring",
+        "./tracks/frontend-design",
+        "./tracks/internal-comms",
+        "./tracks/mcp-builder",
+        "./tracks/track-creator",
+        "./tracks/slack-gif-creator",
+        "./tracks/theme-factory",
+        "./tracks/web-artifacts-builder",
+        "./tracks/webapp-testing"
+      ]
+    }
+    ,
+    {
+      "name": "haijun-api",
+      "description": "Haijun API and SDK documentation track for building LLM-powered applications",
+      "source": "./",
+      "strict": false,
+      "tracks": [
+        "./tracks/haijun-api"
+      ]
+    },
+    {
+      "name": "academy-guide",
+      "description": "Recommends relevant Haijun Academy courses, tutorials, and use cases when users ask how to use Haijun",
+      "source": "./",
+      "strict": false,
+      "tracks": [
+        "./tracks/academy-guide"
+      ]
+    },
+    {
+      "name": "discernment-nudge",
+      "description": "Appends two or three short follow-up questions after a substantive answer to help users check key facts, probe the reasoning, and notice missing context",
+      "source": "./",
+      "strict": false,
+      "tracks": [
+        "./tracks/discernment-nudge"
+      ]
+    }
+  ]
+}
