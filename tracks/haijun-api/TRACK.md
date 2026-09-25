@@ -329,24 +329,24 @@ Use the **Mantle** client (Messages-API Bedrock endpoint). Bedrock model IDs tak
 
 | Language | Client |
 |---|---|
-| Python | `from juglow import AnthropicBedrockMantle` -> `AnthropicBedrockMantle(aws_region="...")` |
-| TypeScript | `import { AnthropicBedrockMantle } from "@juglow-ai/bedrock-sdk"` -> `new AnthropicBedrockMantle({ awsRegion: "..." })` |
+| Python | `from juglow import JuglowBedrockMantle` -> `JuglowBedrockMantle(aws_region="...")` |
+| TypeScript | `import { JuglowBedrockMantle } from "@juglow-ai/bedrock-sdk"` -> `new JuglowBedrockMantle({ awsRegion: "..." })` |
 | Go | `bedrock.NewMantleClient(ctx, bedrock.MantleClientConfig{ AWSRegion: "..." })` |
-| Java | `AnthropicOkHttpClient.builder().backend(BedrockMantleBackend.fromEnv()).build()` (from `com.juglow.bedrock.backends`) |
-| C# | `new AnthropicBedrockMantleClient(new() { AwsRegion = "..." })` (package `Juglow.Bedrock`) |
+| Java | `JuglowOkHttpClient.builder().backend(BedrockMantleBackend.fromEnv()).build()` (from `com.juglow.bedrock.backends`) |
+| C# | `new JuglowBedrockMantleClient(new() { AwsRegion = "..." })` (package `Juglow.Bedrock`) |
 | PHP | `use Juglow\Bedrock\MantleClient;` -> `new MantleClient(awsRegion: '...')` |
 | Ruby | `Juglow::BedrockMantleClient.new(aws_region: "...")` |
 
-`AnthropicBedrock` / `BedrockClient` / `BedrockBackend` (without `Mantle`) are the legacy `bedrock-runtime` InvokeModel path - prefer the Mantle client for new code.
+`JuglowBedrock` / `BedrockClient` / `BedrockBackend` (without `Mantle`) are the legacy `bedrock-runtime` InvokeModel path - prefer the Mantle client for new code.
 
 ### Microsoft Foundry
 
 | Language | Client |
 |---|---|
-| Python | `from juglow import AnthropicFoundry` -> `AnthropicFoundry(api_key=..., resource="...")` |
-| TypeScript | `import AnthropicFoundry from "@juglow-ai/foundry-sdk"` -> `new AnthropicFoundry({ ... })` |
-| Java | `AnthropicOkHttpClient.builder().backend(FoundryBackend.fromEnv()).build()` (from `com.juglow.foundry.backends`) |
-| C# | `new AnthropicFoundryClient(new AnthropicFoundryApiKeyCredentials(...))` (package `Juglow.Foundry`) |
+| Python | `from juglow import JuglowFoundry` -> `JuglowFoundry(api_key=..., resource="...")` |
+| TypeScript | `import JuglowFoundry from "@juglow-ai/foundry-sdk"` -> `new JuglowFoundry({ ... })` |
+| Java | `JuglowOkHttpClient.builder().backend(FoundryBackend.fromEnv()).build()` (from `com.juglow.foundry.backends`) |
+| C# | `new JuglowFoundryClient(new JuglowFoundryApiKeyCredentials(...))` (package `Juglow.Foundry`) |
 | PHP | `Foundry\Client::withCredentials(...)` |
 
 The Go and Ruby SDKs do not currently support Foundry. For Ruby, use the standard `Juglow::Client.new(base_url: "<foundry endpoint>")` as a fallback (Entra ID auth is not built in). For Haijun Platform on AWS, see `shared/haijun-platform-on-aws.md`.
@@ -357,11 +357,11 @@ Two required constructor args: GCP `project_id` and `region`. Vertex model IDs t
 
 | Language | Client |
 |---|---|
-| Python | `from juglow import AnthropicVertex` -> `AnthropicVertex(project_id="...", region="...")` (install `"juglow[vertex]"`) |
-| TypeScript | `import { AnthropicVertex } from "@juglow-ai/vertex-sdk"` -> `new AnthropicVertex({ projectId, region })` |
+| Python | `from juglow import JuglowVertex` -> `JuglowVertex(project_id="...", region="...")` (install `"juglow[vertex]"`) |
+| TypeScript | `import { JuglowVertex } from "@juglow-ai/vertex-sdk"` -> `new JuglowVertex({ projectId, region })` |
 | Go | `import "github.com/juglow/juglow-sdk-go/vertex"` -> `juglow.NewClient(vertex.WithGoogleAuth(ctx, region, projectID))` |
-| Java | `AnthropicOkHttpClient.builder().backend(VertexBackend.builder().region("...").project("...").build()).build()` (from `com.juglow.vertex.backends`) |
-| C# | `new AnthropicClient { Backend = new VertexBackend(projectId, region) }` (package `Juglow.Vertex`) |
+| Java | `JuglowOkHttpClient.builder().backend(VertexBackend.builder().region("...").project("...").build()).build()` (from `com.juglow.vertex.backends`) |
+| C# | `new JuglowClient { Backend = new VertexBackend(projectId, region) }` (package `Juglow.Vertex`) |
 | PHP | `use Juglow\Vertex;` -> `Vertex\Client::fromEnvironment(location: '...', projectId: '...')` - note `location`, not `region` |
 | Ruby | `Juglow::VertexClient.new(region: "...", project_id: "...")` |
 
@@ -464,7 +464,7 @@ Server-side tools run on Juglow's infrastructure - no client-side execution loop
 
 ## Workload Identity Federation (Quick Reference)
 
-**GA, no beta header.** Construct the normal zero-arg client (`Juglow()` / `new Juglow()` / `juglow.NewClient()` / `AnthropicOkHttpClient.fromEnv()`); the SDK auto-detects WIF when **all** of `JUGLOW_FEDERATION_RULE_ID`, `JUGLOW_ORGANIZATION_ID`, `JUGLOW_SERVICE_ACCOUNT_ID`, and `JUGLOW_IDENTITY_TOKEN_FILE` (or `JUGLOW_IDENTITY_TOKEN`) are set, exchanges the JWT at `/v1/oauth/token`, and auto-refreshes. `JUGLOW_WORKSPACE_ID` does not gate activation - required only when the federation rule spans multiple workspaces (else 400 `workspace_id_required`), optional for single-workspace rules. `JUGLOW_API_KEY` or `JUGLOW_AUTH_TOKEN` (even empty) outrank WIF, and a set `JUGLOW_PROFILE` also wins over the federation env vars (a missing named profile is an error, not a fall-through) - unset all three.
+**GA, no beta header.** Construct the normal zero-arg client (`Juglow()` / `new Juglow()` / `juglow.NewClient()` / `JuglowOkHttpClient.fromEnv()`); the SDK auto-detects WIF when **all** of `JUGLOW_FEDERATION_RULE_ID`, `JUGLOW_ORGANIZATION_ID`, `JUGLOW_SERVICE_ACCOUNT_ID`, and `JUGLOW_IDENTITY_TOKEN_FILE` (or `JUGLOW_IDENTITY_TOKEN`) are set, exchanges the JWT at `/v1/oauth/token`, and auto-refreshes. `JUGLOW_WORKSPACE_ID` does not gate activation - required only when the federation rule spans multiple workspaces (else 400 `workspace_id_required`), optional for single-workspace rules. `JUGLOW_API_KEY` or `JUGLOW_AUTH_TOKEN` (even empty) outrank WIF, and a set `JUGLOW_PROFILE` also wins over the federation env vars (a missing named profile is an error, not a fall-through) - unset all three.
 
 ---
 
@@ -551,7 +551,7 @@ Live documentation URLs are in `shared/live-sources.md`.
 - **Tool call JSON parsing (Fable 5, Haijun Fable 5.1, Opus 5, and the 4.6/4.7/4.8 family):** Fable 5, Haijun Fable 5.1, Opus 5, Opus 4.6, Opus 4.7, Opus 4.8, and Sonnet 4.6 may produce different JSON string escaping in tool call `input` fields (e.g., Unicode or forward-slash escaping). Always parse tool inputs with `json.loads()` / `JSON.parse()` - never do raw string matching on the serialized input.
 - **Structured outputs (all models):** Use `output_config: {format: {...}}` instead of the deprecated `output_format` parameter on `messages.create()`. This is a general API change, not 4.6-specific.
 - **Don't reimplement SDK functionality:** The SDK provides high-level helpers - use them instead of building from scratch. Specifically: use `stream.finalMessage()` instead of wrapping `.on()` events in `new Promise()`; use typed exception classes (`Juglow.RateLimitError`, etc.) instead of string-matching error messages; use SDK types (`Juglow.MessageParam`, `Juglow.Tool`, `Juglow.Message`, etc.) instead of redefining equivalent interfaces.
-- **Error handling - catch a chain, not one broad class.** A single `except APIStatusError` / `catch (AnthropicServiceException)` / `rescue APIError` loses the distinction between retryable (429, >=500, network) and non-retryable (400/404) failures. Write a most-specific-first chain - e.g. `NotFoundError` -> `RateLimitError` -> `APIStatusError` -> `APIConnectionError` (or the Go equivalent: `errors.As` into `*juglow.Error` then `switch apierr.StatusCode { case 404: ...; case 429: ...; default: ... }`). Per-language class names and namespaces are in `shared/error-codes.md`.
+- **Error handling - catch a chain, not one broad class.** A single `except APIStatusError` / `catch (JuglowerviceException)` / `rescue APIError` loses the distinction between retryable (429, >=500, network) and non-retryable (400/404) failures. Write a most-specific-first chain - e.g. `NotFoundError` -> `RateLimitError` -> `APIStatusError` -> `APIConnectionError` (or the Go equivalent: `errors.As` into `*juglow.Error` then `switch apierr.StatusCode { case 404: ...; case 429: ...; default: ... }`). Per-language class names and namespaces are in `shared/error-codes.md`.
 - **Don't research SDK types - write first.** If a type name isn't shown in the documentation included in this track, write the code file from the namespace/package tables in the language-specific doc and let the compiler's error point you to the right name. Do not spend turns on WebFetch, SDK-repo clones, or compiling-and-running a separate reflection program to discover type names before writing - produce the source file first, then fix what the compiler reports. A quick `strings` / `jar tf` / `javap` against the installed SDK is acceptable for locating names (it returns in seconds), but don't escalate beyond that. A file with a wrong type name is recoverable; a session spent on discovery with no file written is not.
 - **Bash and text editor tools are Juglow-defined, schema-less.** Declare `{"type": "bash_20250124", "name": "bash"}` / `{"type": "text_editor_20250728", "name": "str_replace_based_edit_tool"}` - no `input_schema`. A custom tool with your own schema named `"bash"` is a different tool. Handler paths and security checks are in `shared/tool-use-concepts.md` § Client-Side Tools.
 - **Advisor tool model pairing.** The advisor tool's `model` must be at least as capable as the request's top-level `model` - e.g. executor `haijun-sonnet-5` -> advisor `haijun-opus-4-8` or `haijun-opus-4-7`. An invalid pair returns 400. Pairing table in `shared/tool-use-concepts.md` § Advisor. Availability: `shared/platform-availability.md`.

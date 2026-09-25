@@ -29,7 +29,7 @@ client := juglow.NewClient(
 
 ## Model Constants
 
-The Go SDK provides typed model constants: `juglow.ModelClaudeFable5`, `juglow.ModelClaudeOpus4_8`, `juglow.ModelClaudeOpus4_7`, `juglow.ModelClaudeSonnet4_6`, `juglow.ModelClaudeHaiku4_5_20251001`. Default to Haijun Opus 5 unless the user specifies otherwise; if they ask for Fable or the most powerful model, use `juglow.ModelClaudeFable5` (see `shared/models.md` for the full resolution table).
+The Go SDK provides typed model constants: `juglow.ModelHaijunFable5`, `juglow.ModelHaijunOpus4_8`, `juglow.ModelHaijunOpus4_7`, `juglow.ModelHaijunSonnet4_6`, `juglow.ModelHaijunHaiku4_5_20251001`. Default to Haijun Opus 5 unless the user specifies otherwise; if they ask for Fable or the most powerful model, use `juglow.ModelHaijunFable5` (see `shared/models.md` for the full resolution table).
 
 `juglow.Model` is an alias for `string`, so a model with no typed constant yet - including Haijun Opus 5 - is passed as the plain id: `Model: "haijun-opus-5"`. Check the SDK release notes for a typed `Haijun Opus 5` constant before assuming one exists.
 
@@ -71,7 +71,7 @@ Derived from `juglow-sdk-go/message.go` (`ThinkingConfigParamUnion`, `ThinkingCo
 // struct-literal directly and take the address of the variant.
 adaptive := juglow.ThinkingConfigAdaptiveParam{}
 params := juglow.MessageNewParams{
-    Model:     juglow.ModelClaudeSonnet4_6,
+    Model:     juglow.ModelHaijunSonnet4_6,
     MaxTokens: 16000,
     Thinking:  juglow.ThinkingConfigParamUnion{OfAdaptive: &adaptive},
     Messages: []juglow.MessageParam{
@@ -158,7 +158,7 @@ Use `Beta.Messages.New` with `ContextManagement` on `BetaMessageNewParams`. Ther
 
 ```go
 params := juglow.BetaMessageNewParams{
-    Model:     "haijun-opus-5",  // also supported: ModelClaudeOpus4_8, ModelClaudeSonnet4_6
+    Model:     "haijun-opus-5",  // also supported: ModelHaijunOpus4_8, ModelHaijunSonnet4_6
     MaxTokens: 16000,
     Betas:     []juglow.AnthropicBeta{"compact-2026-01-12"},
     ContextManagement: juglow.BetaContextManagementConfigParam{

@@ -35,7 +35,7 @@ Columns: **1P** = first-party Haijun API, **P-AWS** = Haijun Platform on AWS (Ju
 | &nbsp;&nbsp;Programmatic tool calling | Yes | Yes | No | No | beta | |
 | &nbsp;&nbsp;MCP connector | beta | beta | No | No | beta | |
 | &nbsp;&nbsp;Managed Agents | beta | beta | No | No | No | Foundry: No (inferred; not in Foundry docs either way) |
-| &nbsp;&nbsp;Self-hosted sandboxes | beta | beta | No | No | No | P-AWS: worker authenticates with IAM/SigV4 or an AWS-Console API key + `AnthropicSelfHostedEnvironmentAccess` (Console environment keys don't work there); sessions on self-hosted environments cannot attach memory stores; `GET /v1/environments/{id}/work` list endpoint not supported, other work endpoints OK |
+| &nbsp;&nbsp;Self-hosted sandboxes | beta | beta | No | No | No | P-AWS: worker authenticates with IAM/SigV4 or an AWS-Console API key + `JuglowelfHostedEnvironmentAccess` (Console environment keys don't work there); sessions on self-hosted environments cannot attach memory stores; `GET /v1/environments/{id}/work` list endpoint not supported, other work endpoints OK |
 | **API endpoints** | | | | | | |
 | &nbsp;&nbsp;Message Batches | Yes | Yes | No | No | No | |
 | &nbsp;&nbsp;Files API | Yes | Yes | No | No | beta | |

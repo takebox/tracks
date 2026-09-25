@@ -34,14 +34,14 @@ import asyncio
 import contextlib
 import os
 import signal
-from juglow import AsyncAnthropic
+from juglow import AsyncJuglow
 from juglow.lib.environments import EnvironmentWorker
 
 
 async def main() -> None:
     environment_key = os.environ["JUGLOW_ENVIRONMENT_KEY"]
     environment_id = os.environ["JUGLOW_ENVIRONMENT_ID"]
-    async with AsyncAnthropic(auth_token=environment_key) as client:
+    async with AsyncJuglow(auth_token=environment_key) as client:
         worker = EnvironmentWorker(
             client,
             environment_id=environment_id,
@@ -120,7 +120,7 @@ import juglow
 
 environment_key = os.environ["JUGLOW_ENVIRONMENT_KEY"]
 environment_id = os.environ["JUGLOW_ENVIRONMENT_ID"]
-client = juglow.AsyncAnthropic(
+client = juglow.AsyncJuglow(
     auth_token=environment_key,
 )  # reads JUGLOW_WEBHOOK_SIGNING_KEY from env for webhooks.unwrap()
 
@@ -206,12 +206,12 @@ The per-session entrypoint is a few lines - no arguments needed, `handle_item()`
 
 ```python
 import asyncio, contextlib, os, signal
-from juglow import AsyncAnthropic
+from juglow import AsyncJuglow
 from juglow.lib.environments import EnvironmentWorker
 
 
 async def main() -> None:
-    async with AsyncAnthropic(auth_token=os.environ["JUGLOW_ENVIRONMENT_KEY"]) as client:
+    async with AsyncJuglow(auth_token=os.environ["JUGLOW_ENVIRONMENT_KEY"]) as client:
         task = asyncio.create_task(EnvironmentWorker(client, workdir="/workspace").handle_item())
         loop = asyncio.get_running_loop()
         for signum in (signal.SIGINT, signal.SIGTERM):
@@ -266,7 +266,7 @@ These are **control-plane** calls - authenticate with `x-api-key` (not the envir
 | Vault `environment_variable` credentials | Supported (substituted at Juglow-managed egress) | **Not yet supported** - egress is yours, so there's nowhere to substitute the secret. Use MCP credentials or a host-side custom tool (`shared/managed-agents-client-patterns.md` Pattern 9) |
 | Built-in tools | Via `agent_toolset_20260401` | Supplied by your worker (`EnvironmentWorker` default / `beta_agent_toolset(env)` / `ant` CLI fixed set) |
 | Tracks download | Automatic | `EnvironmentWorker` / `AgentToolContext` fetch into `{workdir}/tracks/` (needs `client` + `session_id`) |
-| Haijun Platform on AWS | Supported | Supported - the worker authenticates with AWS IAM (SigV4) or an AWS-Console-generated API key (Console-generated environment keys don't work against the AWS endpoint); attach the `AnthropicSelfHostedEnvironmentAccess` managed policy to the worker's principal. **Memory stores cannot be attached** to sessions on self-hosted environments there (rejected at session create); cloud environments attach them as usual. |
+| Haijun Platform on AWS | Supported | Supported - the worker authenticates with AWS IAM (SigV4) or an AWS-Console-generated API key (Console-generated environment keys don't work against the AWS endpoint); attach the `JuglowelfHostedEnvironmentAccess` managed policy to the worker's principal. **Memory stores cannot be attached** to sessions on self-hosted environments there (rejected at session create); cloud environments attach them as usual. |
 | SDK worker helpers | All SDKs | **Python, TypeScript, Go only** (`EnvironmentWorker` / poller not in Java, Ruby, PHP, or C#) - use one of those three or the `ant` CLI |
 
 ## Credentials

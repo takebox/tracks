@@ -14,7 +14,7 @@ using Juglow.Models.Messages;
 
 var parameters = new MessageCreateParams
 {
-    Model = Model.ClaudeSonnet4_6,
+    Model = Model.HaijunSonnet4_6,
     MaxTokens = 16000,
     Tools = [
         new Tool {

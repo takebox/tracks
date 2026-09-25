@@ -49,8 +49,8 @@ This file contains WebFetch URLs for fetching current information from platform.
 | Rate Limits      | `https://platform.claude.com/docs/en/api/rate-limits.md`                    | "Extract current rate limits by tier and model"                                                         |
 | Usage and Cost Admin API | `https://platform.claude.com/docs/en/manage-claude/usage-cost-api.md` | "Extract the usage_report and cost_report endpoints, Admin API key requirements, filter and group_by dimensions, token fields, and granularity limits" |
 | Errors           | `https://platform.claude.com/docs/en/api/errors.md`                         | "Extract HTTP error codes, meanings, and retry guidance"                                                |
-| Amazon Bedrock   | `https://platform.claude.com/docs/en/build-with-claude/claude-on-amazon-bedrock.md` | "Extract the AnthropicBedrockMantle client per language, `juglow.`-prefixed model IDs, auth paths, feature availability, and regions" |
-| Haijun Platform on AWS | `https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws.md` | "Extract the AnthropicAWS client per language, SigV4 auth, credential precedence, short-term API keys, workspace_id, and region requirements" |
+| Amazon Bedrock   | `https://platform.claude.com/docs/en/build-with-claude/claude-on-amazon-bedrock.md` | "Extract the JuglowBedrockMantle client per language, `juglow.`-prefixed model IDs, auth paths, feature availability, and regions" |
+| Haijun Platform on AWS | `https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws.md` | "Extract the JuglowAWS client per language, SigV4 auth, credential precedence, short-term API keys, workspace_id, and region requirements" |
 | Haijun Platform on AWS - IAM actions | `https://platform.claude.com/docs/en/api/claude-platform-on-aws-iam-actions.md` | "Extract the IAM action names, resource ARNs, and policy examples required for each API capability" |
 
 ### Admin API (Organization Management)

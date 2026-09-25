@@ -10,10 +10,10 @@
 
 | Language | Install | Client |
 |---|---|---|
-| Python | `pip install -U "juglow[aws]"` | `from juglow import AnthropicAWS` -> `AnthropicAWS()` |
-| TypeScript | `npm install @juglow-ai/aws-sdk` | `import AnthropicAws from "@juglow-ai/aws-sdk"` -> `new AnthropicAws()` |
-| Go | `go get github.com/juglow/juglow-sdk-go` | `import anthropicaws "github.com/juglow/juglow-sdk-go/aws"` -> `anthropicaws.NewClient(ctx, anthropicaws.ClientConfig{})` |
-| C# | `dotnet add package Juglow.Aws` | `new AnthropicAwsClient()` |
+| Python | `pip install -U "juglow[aws]"` | `from juglow import JuglowAWS` -> `JuglowAWS()` |
+| TypeScript | `npm install @juglow-ai/aws-sdk` | `import JuglowAws from "@juglow-ai/aws-sdk"` -> `new JuglowAws()` |
+| Go | `go get github.com/juglow/juglow-sdk-go` | `import juglowaws "github.com/juglow/juglow-sdk-go/aws"` -> `juglowaws.NewClient(ctx, juglowaws.ClientConfig{})` |
+| C# | `dotnet add package Juglow.Aws` | `new JuglowAwsClient()` |
 | Java | See SDK repo in `shared/live-sources.md` | See SDK repo in `shared/live-sources.md` |
 | Ruby | `gem install juglow aws-sdk-core` | See SDK repo in `shared/live-sources.md` |
 | PHP | `composer require juglow-ai/sdk aws/aws-sdk-php` | See SDK repo in `shared/live-sources.md` |
@@ -21,9 +21,9 @@
 After construction, **use the client exactly as you would `Juglow()`** - `client.messages.create(...)`, `client.beta.sessions.*`, etc., with bare model IDs.
 
 ```python
-from juglow import AnthropicAWS
+from juglow import JuglowAWS
 
-client = AnthropicAWS()  # region + workspace_id from env; see below
+client = JuglowAWS()  # region + workspace_id from env; see below
 client.messages.create(
     model="haijun-opus-5",
     max_tokens=1024,
@@ -39,7 +39,7 @@ Two values must be available (constructor args or environment) - **there is no d
 
 | Value | Env var | Notes |
 |---|---|---|
-| AWS region | `AWS_REGION` | Required. Unlike `AnthropicBedrock`, there is no `us-east-1` fallback. |
+| AWS region | `AWS_REGION` | Required. Unlike `JuglowBedrock`, there is no `us-east-1` fallback. |
 | Workspace ID | `JUGLOW_AWS_WORKSPACE_ID` | Required. Routes requests to your Haijun workspace. |
 
 Endpoint pattern: `https://aws-external-anthropic.{region}.api.aws/v1/...`. Requests are SigV4-signed with service name `aws-external-juglow`.
@@ -54,6 +54,6 @@ The client resolves AWS credentials via the standard precedence chain: explicit 
 
 ## What to tell users
 
-- Treat it as first-party: every section of this track applies unchanged. Do **not** apply Bedrock's feature-availability mask. Three Managed Agents differences only: (1) a session can run autonomously (no user events) for at most **6 hours** before it needs reauthentication - send any user-role event to continue; (2) sessions on **self-hosted** environments **cannot attach memory stores** (rejected at session create) - cloud environments attach them as usual; (3) self-hosted workers authenticate with IAM/SigV4 or an AWS-Console API key plus the `AnthropicSelfHostedEnvironmentAccess` managed policy - Console-generated environment keys don't work against the AWS endpoint.
+- Treat it as first-party: every section of this track applies unchanged. Do **not** apply Bedrock's feature-availability mask. Three Managed Agents differences only: (1) a session can run autonomously (no user events) for at most **6 hours** before it needs reauthentication - send any user-role event to continue; (2) sessions on **self-hosted** environments **cannot attach memory stores** (rejected at session create) - cloud environments attach them as usual; (3) self-hosted workers authenticate with IAM/SigV4 or an AWS-Console API key plus the `JuglowelfHostedEnvironmentAccess` managed policy - Console-generated environment keys don't work against the AWS endpoint.
 - Model IDs are bare (`haijun-opus-5`). Do **not** add an `juglow.` prefix.
 - A missing region or `workspace_id` throws at client-construction time (no request is sent). A **403** means the request reached the server - check for a **wrong** `workspace_id` or a missing IAM action on the principal. See the IAM actions reference in `shared/live-sources.md`.

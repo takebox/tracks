@@ -8,13 +8,13 @@ Types are organized by package. If a class you need isn't shown in an example be
 
 | `import` prefix | Contains |
 |---|---|
-| `com.juglow.client` / `com.juglow.client.okhttp` | `AnthropicClient`, `AnthropicOkHttpClient` |
+| `com.juglow.client` / `com.juglow.client.okhttp` | `JuglowClient`, `JuglowOkHttpClient` |
 | `com.juglow.models.messages` | non-beta request/response types - `MessageCreateParams`, `Model`, `Message`, `TextBlockParam`, `ContentBlockParam`, `ToolUseBlockParam`, `ToolResultBlockParam`, `CacheControlEphemeral`, `Tool*` (e.g. `ToolBash20250124`, `ToolTextEditor20250728`), `StopReason`, `StructuredMessage*` |
 | `com.juglow.models.messages.batches` | Batch API - `BatchResultsParams`, `MessageBatchIndividualResponse` |
 | `com.juglow.models.beta` | `AnthropicBeta` (beta-flag constants) |
 | `com.juglow.models.beta.messages` | beta-endpoint types - `MessageCreateParams`, `BetaMessage`, `BetaStopReason`, `BetaContextManagementConfig`, `BetaMcpToolset`, `BetaRequestMcpServerUrlDefinition`, `BetaTool*` |
 | `com.juglow.core` | `JsonValue`, `JsonField`, `JsonSchemaLocalValidation`, `com.juglow.core.http.StreamResponse` |
-| `com.juglow.errors` | typed exceptions - `AnthropicServiceException`, `RateLimitException`, `NotFoundException`, etc. (see `shared/error-codes.md`) |
+| `com.juglow.errors` | typed exceptions - `JuglowerviceException`, `RateLimitException`, `NotFoundException`, etc. (see `shared/error-codes.md`) |
 
 `client.messages()` uses `com.juglow.models.messages.*`; `client.beta().messages()` uses `com.juglow.models.beta.messages.*`. Both packages define a `MessageCreateParams` - import the one matching the client path you call.
 
@@ -25,7 +25,7 @@ Write from this table instead of `javap`/jar inspection. Endpoint column tells y
 | Feature | Endpoint | Key Java types / builder calls |
 |---|---|---|
 | User profiles | beta | `client.beta().userProfiles().create(...)` / `.retrieve(id)` / `.list()`. Pass the returned profile id on the beta `MessageCreateParams`. Requires a beta header - check the SDK's beta-headers reference for the current flag. |
-| Agent Tracks | beta | `BetaContainerParams`, `BetaSkillParams`, `BetaCodeExecutionTool20250825`. `.addBeta("code-execution-2025-08-25")` (Tracks is out of beta - no `tracks-2025-10-02`). Download the output via `client.beta().files().download(fileId)`. |
+| Agent Tracks | beta | `BetaContainerParams`, `BetaTrackParams`, `BetaCodeExecutionTool20250825`. `.addBeta("code-execution-2025-08-25")` (Tracks is out of beta - no `tracks-2025-10-02`). Download the output via `client.beta().files().download(fileId)`. |
 | Cache diagnostics | beta | `BetaDiagnosticsParam`, `BetaCacheControlEphemeral` |
 | Context editing | beta | `.contextManagement(BetaContextManagementConfig.builder()...)`. The edit strategy is a `BetaClearToolUses20250919Edit` (or `BetaClearThinking20251015Edit`); its trigger is a `BetaInputTokensTrigger` built separately and passed to the edit's builder - there is no direct `.inputTokensTrigger(N)` shortcut on the edit builder. `javap` the edit and trigger classes for the exact setter names. |
 | Memory tool | non-beta | `.addTool(MemoryTool20250818.builder().build())` from `com.juglow.models.messages` |
@@ -60,14 +60,14 @@ implementation("com.juglow:juglow-java:2.34.0")
 ## Client Initialization
 
 ```java
-import com.juglow.client.AnthropicClient;
-import com.juglow.client.okhttp.AnthropicOkHttpClient;
+import com.juglow.client.JuglowClient;
+import com.juglow.client.okhttp.JuglowOkHttpClient;
 
 // Default (reads JUGLOW_API_KEY from environment)
-AnthropicClient client = AnthropicOkHttpClient.fromEnv();
+JuglowClient client = JuglowOkHttpClient.fromEnv();
 
 // Explicit API key
-AnthropicClient client = AnthropicOkHttpClient.builder()
+JuglowClient client = JuglowOkHttpClient.builder()
     .apiKey("your-api-key")
     .build();
 ```
@@ -222,12 +222,12 @@ response.stopDetails().ifPresent(details -> {
 
 ## Error Type
 
-`AnthropicServiceException` exposes `.errorType()` returning `Optional<ErrorType>` for programmatic error classification:
+`JuglowerviceException` exposes `.errorType()` returning `Optional<ErrorType>` for programmatic error classification:
 
 ```java
 try {
     client.messages().create(params);
-} catch (AnthropicServiceException e) {
+} catch (JuglowerviceException e) {
     e.errorType().ifPresent(type ->
         System.out.println("Error type: " + type)  // RATE_LIMIT_ERROR, OVERLOADED_ERROR, etc.
     );

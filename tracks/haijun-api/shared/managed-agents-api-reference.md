@@ -215,10 +215,10 @@ Immutable per-mutation snapshots (`memver_...`) - the audit and rollback surface
 
 | Method   | Path                                                            | Operation          | Description                  |
 | -------- | --------------------------------------------------------------- | ------------------ | ---------------------------- |
-| `POST`   | `/v1/tracks`                                          | CreateSkill        | Create a track               |
-| `GET`    | `/v1/tracks`                                          | ListSkills         | List tracks                  |
-| `GET`    | `/v1/tracks/{track_id}`                               | GetSkill           | Get track details            |
-| `DELETE` | `/v1/tracks/{track_id}`                               | DeleteSkill        | Delete a track               |
+| `POST`   | `/v1/tracks`                                          | CreateTrack        | Create a track               |
+| `GET`    | `/v1/tracks`                                          | ListTracks         | List tracks                  |
+| `GET`    | `/v1/tracks/{track_id}`                               | GetTrack           | Get track details            |
+| `DELETE` | `/v1/tracks/{track_id}`                               | DeleteTrack        | Delete a track               |
 | `POST`   | `/v1/tracks/{track_id}/versions`                      | CreateVersion      | Create track version         |
 | `GET`    | `/v1/tracks/{track_id}/versions`                      | ListVersions       | List track versions          |
 | `GET`    | `/v1/tracks/{track_id}/versions/{version}`            | GetVersion         | Get track version            |

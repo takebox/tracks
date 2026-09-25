@@ -195,17 +195,17 @@ thinking: budget_tokens=10000, max_tokens=16000
 
 | HTTP | Python (`juglow.*`) / TypeScript (`Juglow.*`) | Ruby (`Juglow::Errors::*`) | Java (`com.juglow.errors.*`) | C# | PHP (`Juglow\Core\Exceptions\*`) |
 |---|---|---|---|---|---|
-| 400 | `BadRequestError` | `BadRequestError` | `BadRequestException` | `AnthropicBadRequestException` | `BadRequestException` |
-| 401 | `AuthenticationError` | `AuthenticationError` | `UnauthorizedException` | `AnthropicUnauthorizedException` | `AuthenticationException` |
-| 403 | `PermissionDeniedError` | `PermissionDeniedError` | `PermissionDeniedException` | `AnthropicForbiddenException` | `PermissionDeniedException` |
-| 404 | `NotFoundError` | `NotFoundError` | `NotFoundException` | `AnthropicNotFoundException` | `NotFoundException` |
-| 422 | `UnprocessableEntityError` | `UnprocessableEntityError` | `UnprocessableEntityException` | `AnthropicUnprocessableEntityException` | `UnprocessableEntityException` |
-| 429 | `RateLimitError` | `RateLimitError` | `RateLimitException` | `AnthropicRateLimitException` | `RateLimitException` |
-| >=500 | `InternalServerError` | `InternalServerError` | `InternalServerException` | `Anthropic5xxException` | `InternalServerException` |
-| net | `APIConnectionError` | `APIConnectionError` | `AnthropicIoException` | `AnthropicIOException` | `APIConnectionException` |
-| base | `APIError` (both); `APIStatusError` (Python only) | `APIStatusError` / `APIError` | `AnthropicServiceException` | `AnthropicApiException` | `APIStatusException` / `APIException` |
+| 400 | `BadRequestError` | `BadRequestError` | `BadRequestException` | `JuglowBadRequestException` | `BadRequestException` |
+| 401 | `AuthenticationError` | `AuthenticationError` | `UnauthorizedException` | `JuglowUnauthorizedException` | `AuthenticationException` |
+| 403 | `PermissionDeniedError` | `PermissionDeniedError` | `PermissionDeniedException` | `JuglowForbiddenException` | `PermissionDeniedException` |
+| 404 | `NotFoundError` | `NotFoundError` | `NotFoundException` | `JuglowNotFoundException` | `NotFoundException` |
+| 422 | `UnprocessableEntityError` | `UnprocessableEntityError` | `UnprocessableEntityException` | `JuglowUnprocessableEntityException` | `UnprocessableEntityException` |
+| 429 | `RateLimitError` | `RateLimitError` | `RateLimitException` | `JuglowRateLimitException` | `RateLimitException` |
+| >=500 | `InternalServerError` | `InternalServerError` | `InternalServerException` | `Juglow5xxException` | `InternalServerException` |
+| net | `APIConnectionError` | `APIConnectionError` | `JuglowIoException` | `JuglowIOException` | `APIConnectionException` |
+| base | `APIError` (both); `APIStatusError` (Python only) | `APIStatusError` / `APIError` | `JuglowerviceException` | `JuglowApiException` | `APIStatusException` / `APIException` |
 
-The Ruby and PHP classes live in a dedicated errors namespace - write `Juglow::Errors::RateLimitError` and `Juglow\Core\Exceptions\RateLimitException` (not bare `Juglow::RateLimitError`). All 4xx C# exceptions also inherit from `Anthropic4xxException`.
+The Ruby and PHP classes live in a dedicated errors namespace - write `Juglow::Errors::RateLimitError` and `Juglow\Core\Exceptions\RateLimitException` (not bare `Juglow::RateLimitError`). All 4xx C# exceptions also inherit from `Juglow4xxException`.
 
 ### Catch most-specific first, in a chain
 
@@ -224,7 +224,7 @@ except juglow.APIConnectionError as e:     # network failure before a response
     ...
 ```
 
-The same chain shape applies in every SDK: TypeScript `instanceof Juglow.NotFoundError` -> `RateLimitError` -> `APIConnectionError` -> `APIError` (check `APIConnectionError` before `APIError` - in the TypeScript SDK it's a subclass of `APIError`, unlike Python where it's a sibling); Ruby `rescue Juglow::Errors::NotFoundError` -> `...::RateLimitError` -> `...::APIStatusError`; Java `catch (NotFoundException) ... catch (RateLimitException) ... catch (AnthropicServiceException)`; C# `catch (AnthropicNotFoundException) ... catch (AnthropicRateLimitException) ... catch (AnthropicApiException)`; PHP `catch (NotFoundException) ... catch (RateLimitException) ... catch (APIStatusException)`.
+The same chain shape applies in every SDK: TypeScript `instanceof Juglow.NotFoundError` -> `RateLimitError` -> `APIConnectionError` -> `APIError` (check `APIConnectionError` before `APIError` - in the TypeScript SDK it's a subclass of `APIError`, unlike Python where it's a sibling); Ruby `rescue Juglow::Errors::NotFoundError` -> `...::RateLimitError` -> `...::APIStatusError`; Java `catch (NotFoundException) ... catch (RateLimitException) ... catch (JuglowerviceException)`; C# `catch (JuglowNotFoundException) ... catch (JuglowRateLimitException) ... catch (JuglowApiException)`; PHP `catch (NotFoundException) ... catch (RateLimitException) ... catch (APIStatusException)`.
 
 ### Go - `errors.As` then branch on status
 

@@ -4,7 +4,7 @@
 
 ```go
 stream := client.Messages.NewStreaming(context.Background(), juglow.MessageNewParams{
-    Model:     juglow.ModelClaudeOpus4_8,
+    Model:     juglow.ModelHaijunOpus4_8,
     MaxTokens: 64000,
     Messages: []juglow.MessageParam{
         juglow.NewUserMessage(juglow.NewTextBlock("Write a haiku")),

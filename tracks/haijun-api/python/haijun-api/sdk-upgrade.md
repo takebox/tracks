@@ -40,7 +40,7 @@ Search the scope for each signal below (`rg -n -F` for the literal strings; excl
 | `body=` on `client.get` / `post` / `put` / `patch` / `delete` calls whose value is `bytes` (`b"..."`, `.encode()`, a bytes variable) | raw bytes passed as `body=` | Step 8 |
 | `isinstance(` checks against `Stream` / `AsyncStream` | checks aimed at message streams | Step 8 |
 | `default_headers`, `extra_headers`, `JUGLOW_CUSTOM_HEADERS` | header maps to check for duplicate casings / `bytes` values | Step 9 |
-| `AnthropicBedrock(`, `AsyncAnthropicBedrock(` | Bedrock clients that may rely on the old region fallback | Step 10 |
+| `JuglowBedrock(`, `AsyncJuglowBedrock(` | Bedrock clients that may rely on the old region fallback | Step 10 |
 
 Classify each hit before editing: **SDK call site** (edit), **unrelated use of the same name** (leave - e.g. `httpx` calls to other services, `urllib.parse`, a pydantic `.parse_obj`, a `temperature` variable for a thermostat), **test** (edit, and keep the test meaningful), **docs / README snippet or notebook inside the scope** (edit - for `.ipynb`, the greps match inside the JSON cell sources; edit the source strings, `%pip install` lines included, and keep the JSON valid). Never touch installed packages or vendored third-party code.
 
@@ -114,7 +114,7 @@ Pydantic v1 and v2 both remain supported; nothing else about the environment cha
 
 `.with_raw_response` used to return `LegacyAPIResponse` on both clients; it now returns the same classes `.with_streaming_response` already used. Two consequences:
 
-- **[BREAKS] On async clients, reading the body is awaited** - `parse()`, `json()`, `text()`, `read()` are coroutines. Decide sync vs async from the client the accessor hangs off (`AsyncAnthropic` and the other `Async*` platform clients) or an `await` on the `.with_raw_response...(...)` call itself - not from the enclosing function alone.
+- **[BREAKS] On async clients, reading the body is awaited** - `parse()`, `json()`, `text()`, `read()` are coroutines. Decide sync vs async from the client the accessor hangs off (`AsyncJuglow` and the other `Async*` platform clients) or an `await` on the `.with_raw_response...(...)` call itself - not from the enclosing function alone.
 - **[BREAKS] `.text` and `.content` are methods now, on the sync client too:** `.text` -> `.text()`, `.content` -> `.read()`. The new classes also expose `json()` and the `iter_bytes()` / `iter_text()` / `iter_lines()` iterators directly; 0.x code reached those through `r.http_response`, which still works and need not be rewritten.
 
 | 0.x (`LegacyAPIResponse`) | 1.x sync (`APIResponse`) | 1.x async (`AsyncAPIResponse`) |
@@ -142,7 +142,7 @@ Anchor every edit on a value that demonstrably comes from a `.with_raw_response.
 
 ## Step 5: Text Completions -> Messages (the one non-mechanical change)
 
-**[BREAKS]** `client.completions.create()` (`/v1/complete`), the `Completion` types, and the `juglow.HUMAN_PROMPT` / `juglow.AI_PROMPT` constants are removed (also from `AnthropicBedrock`). Port each call to `client.messages.create()`:
+**[BREAKS]** `client.completions.create()` (`/v1/complete`), the `Completion` types, and the `juglow.HUMAN_PROMPT` / `juglow.AI_PROMPT` constants are removed (also from `JuglowBedrock`). Port each call to `client.messages.create()`:
 
 - the `f"{HUMAN_PROMPT} ...{AI_PROMPT}"` prompt string becomes `messages=[{"role": "user", "content": "..."}]`; text that preceded the first `HUMAN_PROMPT` as instructions becomes `system=`; alternating `HUMAN_PROMPT`/`AI_PROMPT` turns become alternating `user`/`assistant` messages;
 - `max_tokens_to_sample=` -> `max_tokens=`; `stop_sequences=` carries over; drop `temperature`/`top_p`/`top_k` (Step 6);
@@ -252,7 +252,7 @@ Usually nothing to edit. The SDK now merges `default_headers`, `extra_headers`, 
 
 ## Step 10: Bedrock - a region is required
 
-**[DECIDE]** `AnthropicBedrock()` / `AsyncAnthropicBedrock()` used to warn and fall back to `us-east-1` when no region was configured; they now raise `ValueError` at construction. Resolution order: `aws_region=` -> `AWS_REGION` / `AWS_DEFAULT_REGION` -> the region configured for the boto3 session / `aws_profile` (the profile is now honoured for region lookup). For each construction without `aws_region=`, check whether the deployment provides a region (env files, Dockerfiles, deployment manifests, AWS profile config in the repo). If it demonstrably does, nothing to do; if you cannot tell, do **not** invent a region - list the call site in the report as needing `aws_region=` or `AWS_REGION`, and only hardcode `"us-east-1"` if the user confirms that the old implicit default is what they were actually using.
+**[DECIDE]** `JuglowBedrock()` / `AsyncJuglowBedrock()` used to warn and fall back to `us-east-1` when no region was configured; they now raise `ValueError` at construction. Resolution order: `aws_region=` -> `AWS_REGION` / `AWS_DEFAULT_REGION` -> the region configured for the boto3 session / `aws_profile` (the profile is now honoured for region lookup). For each construction without `aws_region=`, check whether the deployment provides a region (env files, Dockerfiles, deployment manifests, AWS profile config in the repo). If it demonstrably does, nothing to do; if you cannot tell, do **not** invent a region - list the call site in the report as needing `aws_region=` or `AWS_REGION`, and only hardcode `"us-east-1"` if the user confirms that the old implicit default is what they were actually using.
 
 Streaming from Bedrock also changes: event types the SDK does not know are now skipped instead of yielded - the only known case is the `amazon-bedrock-invocationMetrics` frame. Code that filtered those frames out can be deleted; code that *consumed* invocation metrics loses them on 1.x - **[DECIDE]** list it in the report (the SDK asks such users to open an issue).
 

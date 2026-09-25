@@ -16,7 +16,7 @@ The Files API is out of beta. In current SDKs `client.beta.files` has breaking s
 
 ## Upload a File
 
-The `file` argument accepts a `(filename, content, content_type)` tuple, a `pathlib.Path` (or any `PathLike` - read for you, async-safe with `AsyncAnthropic`), or an open binary file object.
+The `file` argument accepts a `(filename, content, content_type)` tuple, a `pathlib.Path` (or any `PathLike` - read for you, async-safe with `AsyncJuglow`), or an open binary file object.
 
 ```python
 import juglow

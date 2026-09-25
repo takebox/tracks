@@ -95,12 +95,12 @@ Alternatively, use the manual loop below, which handles `pause_turn` explicitly.
 ### MCP Tools with Tool Runner
 
 ```python
-from juglow import AsyncAnthropic
+from juglow import AsyncJuglow
 from juglow.lib.tools.mcp import async_mcp_tool
 from mcp import ClientSession
 from mcp.client.stdio import stdio_client, StdioServerParameters
 
-client = AsyncAnthropic()
+client = AsyncJuglow()
 
 async with stdio_client(StdioServerParameters(command="mcp-server")) as (read, write):
     async with ClientSession(read, write) as mcp_client:

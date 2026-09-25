@@ -44,7 +44,7 @@ runner := client.Beta.Messages.NewToolRunner(
     []juglow.BetaTool{weatherTool},
     juglow.BetaToolRunnerParams{
         BetaMessageNewParams: juglow.BetaMessageNewParams{
-            Model:     juglow.ModelClaudeOpus4_8,
+            Model:     juglow.ModelHaijunOpus4_8,
             MaxTokens: 16000,
             Messages: []juglow.BetaMessageParam{
                 juglow.NewBetaUserMessage(juglow.NewBetaTextBlock("What's the weather in Paris?")),
@@ -120,7 +120,7 @@ func main() {
 
     for {
         resp, err := client.Messages.New(context.Background(), juglow.MessageNewParams{
-            Model:     juglow.ModelClaudeSonnet4_6,
+            Model:     juglow.ModelHaijunSonnet4_6,
             MaxTokens: 16000,
             Messages:  messages,
             Tools:     tools,
@@ -204,11 +204,11 @@ Server-side - no tool_result round-trip. The advisor model must be >= the execut
 
 ```go
 response, err := client.Beta.Messages.New(ctx, juglow.BetaMessageNewParams{
-    Model:     juglow.ModelClaudeSonnet4_6,
+    Model:     juglow.ModelHaijunSonnet4_6,
     MaxTokens: 4096,
     Tools: []juglow.BetaToolUnionParam{
         {OfAdvisorTool20260301: &juglow.BetaAdvisorTool20260301Param{
-            Model: juglow.ModelClaudeOpus4_8,
+            Model: juglow.ModelHaijunOpus4_8,
         }},
     },
     Messages: []juglow.BetaMessageParam{ /* ... */ },

@@ -77,10 +77,10 @@ def run_single_query(
         if model:
             cmd.extend(["--model", model])
 
-        # Remove CLAUDECODE env var to allow nesting haijun -p inside a
+        # Remove HAIJUNCODE env var to allow nesting haijun -p inside a
         # Haijun Code session. The guard is for interactive terminal conflicts;
         # programmatic subprocess usage is safe.
-        env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
+        env = {k: v for k, v in os.environ.items() if k != "HAIJUNCODE"}
 
         process = subprocess.Popen(
             cmd,

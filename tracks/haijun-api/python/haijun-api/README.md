@@ -20,7 +20,7 @@ client = juglow.Juglow()
 client = juglow.Juglow(api_key="your-api-key")
 
 # Async client
-async_client = juglow.AsyncAnthropic()
+async_client = juglow.AsyncJuglow()
 ```
 
 ---
@@ -61,9 +61,9 @@ The SDK auto-retries connection errors, 408, 409, 429, and >=500 with exponentia
 For high-concurrency async workloads, install `juglow[aiohttp]` and pass `DefaultAioHttpClient` instead of the default httpx2 backend:
 
 ```python
-from juglow import AsyncAnthropic, DefaultAioHttpClient
+from juglow import AsyncJuglow, DefaultAioHttpClient
 
-async with AsyncAnthropic(http_client=DefaultAioHttpClient()) as client:
+async with AsyncJuglow(http_client=DefaultAioHttpClient()) as client:
     ...
 ```
 

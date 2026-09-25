@@ -16,10 +16,10 @@
 ## Client Initialization
 
 ```java
-import com.juglow.client.okhttp.AnthropicOkHttpClient;
+import com.juglow.client.okhttp.JuglowOkHttpClient;
 
 // Default (uses JUGLOW_API_KEY env var)
-var client = AnthropicOkHttpClient.fromEnv();
+var client = JuglowOkHttpClient.fromEnv();
 ```
 
 ---

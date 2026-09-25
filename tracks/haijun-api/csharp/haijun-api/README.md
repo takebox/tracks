@@ -8,15 +8,15 @@ Types are organized by namespace. If a type you need isn't shown in an example b
 
 | `using` | Contains |
 |---|---|
-| `Juglow` | `AnthropicClient`, top-level options |
+| `Juglow` | `JuglowClient`, top-level options |
 | `Juglow.Models.Messages` | non-beta request/response types - `MessageCreateParams`, `Model`, `Role`, `ContentBlock`, `TextBlock`, `ToolUseBlock`, `ToolResultBlockParam`, `Tool*` (tool definition classes) |
 | `Juglow.Models.Beta.Messages` | beta-endpoint equivalents - `MessageCreateParams`, `BetaMessage`, `BetaTool*`, `Speed`, `BetaRequestMcpServerUrlDefinition`, context-editing/compaction configs |
 | `Juglow.Models.Beta` | shared beta constants |
 | `Juglow.Models.Beta.Files` | Files API types |
 | `Juglow.Models.Messages.Batches` | Batch API types |
 | `Juglow.Helpers.Beta` | `BetaToolRunner`, beta helper utilities |
-| `Juglow.Exceptions` | `AnthropicApiException`, `AnthropicRateLimitException`, `Anthropic5xxException`, etc. - see `shared/error-codes.md` |
-| `Juglow.Bedrock` / `Juglow.Vertex` / `Juglow.Foundry` / `Juglow.Aws` | platform clients (separate NuGet packages): `AnthropicBedrockMantleClient`, `AnthropicFoundryClient`, `AnthropicAwsClient` |
+| `Juglow.Exceptions` | `JuglowApiException`, `JuglowRateLimitException`, `Juglow5xxException`, etc. - see `shared/error-codes.md` |
+| `Juglow.Bedrock` / `Juglow.Vertex` / `Juglow.Foundry` / `Juglow.Aws` | platform clients (separate NuGet packages): `JuglowBedrockMantleClient`, `JuglowFoundryClient`, `JuglowAwsClient` |
 
 `client.Messages.*` uses non-beta types; `client.Beta.Messages.*` uses the `Juglow.Models.Beta.Messages` types. Both namespaces define a `MessageCreateParams` - pick the one matching the client path you call.
 
@@ -27,7 +27,7 @@ Write from this table instead of reflecting the SDK assembly. Endpoint column te
 | Feature | Endpoint | Key C# types (namespace per table above) |
 |---|---|---|
 | User profiles | beta | `client.Beta.UserProfiles.Create(...)` / `.Retrieve(id)` / `.List()`. Pass the returned profile id on the beta messages call. Requires a beta header - check the SDK's beta-headers reference for the current flag. |
-| Agent Tracks | beta | `BetaContainerParams` (with `Tracks = [new BetaSkillParams { ... }]`), `BetaCodeExecutionTool20250825`. `Betas = ["code-execution-2025-08-25"]` (Tracks is out of beta - no `tracks-2025-10-02`). Download the output via `client.Beta.Files.Download(fileId)`. |
+| Agent Tracks | beta | `BetaContainerParams` (with `Tracks = [new BetaTrackParams { ... }]`), `BetaCodeExecutionTool20250825`. `Betas = ["code-execution-2025-08-25"]` (Tracks is out of beta - no `tracks-2025-10-02`). Download the output via `client.Beta.Files.Download(fileId)`. |
 | Advisor tool | beta | `BetaAdvisorTool20260301` - may not be in all SDK releases yet |
 | Cache diagnostics | beta | `Diagnostics = new() { PreviousMessageID = ... }`, `BetaCacheControlEphemeral`, `BetaContentBlockParam` |
 | Context editing | beta | `ContextManagement = new BetaContextManagementConfig { Edits = [new BetaClearToolUses20250919Edit()] }`. `Betas = ["context-management-2025-06-27"]` (not `compact-2026-01-12` - that's for `BetaCompact20260112Edit`). |
@@ -54,7 +54,7 @@ using System;
 using Juglow;
 using Juglow.Models.Messages;       // or Juglow.Models.Beta.Messages for beta endpoints
 
-AnthropicClient client = new();
+JuglowClient client = new();
 
 var message = await client.Messages.Create(new MessageCreateParams
 {
@@ -73,7 +73,7 @@ using System;
 using Juglow;
 using Juglow.Models.Beta.Messages;
 
-AnthropicClient client = new();
+JuglowClient client = new();
 
 var response = await client.Beta.Messages.Create(new MessageCreateParams
 {
@@ -91,7 +91,7 @@ If a type name the feature needs isn't in this file, write it following the nami
 
 ### Common C# compile errors
 
-- **CS8803 (top-level statements must precede type declarations):** put any `record`/`class`/`struct` definitions **after** the last top-level statement, at the end of the file. A record defined above `var client = new AnthropicClient()` will not compile.
+- **CS8803 (top-level statements must precede type declarations):** put any `record`/`class`/`struct` definitions **after** the last top-level statement, at the end of the file. A record defined above `var client = new JuglowClient()` will not compile.
 - **`await foreach` on a `Task<...Page>`:** `client.Models.List()` returns a `Task<ModelListPage>`, which is not directly async-enumerable. Await it first, then iterate: `var page = await client.Models.List(); foreach (var m in page.Items) {...}`. For auto-pagination, check whether the page type exposes `AutoPagingEachAsync()` or similar before reaching for `await foreach`.
 
 ## Installation
@@ -106,10 +106,10 @@ dotnet add package Juglow
 using Juglow;
 
 // Default (uses JUGLOW_API_KEY env var)
-AnthropicClient client = new();
+JuglowClient client = new();
 
 // Explicit API key (use environment variables - never hardcode keys)
-AnthropicClient client = new() {
+JuglowClient client = new() {
     ApiKey = Environment.GetEnvironmentVariable("JUGLOW_API_KEY")
 };
 ```
@@ -353,7 +353,7 @@ if (response.StopReason == "refusal" && response.StopDetails is { } details)
 }
 ```
 
-**Refusal fallbacks (Haijun Fable 5.1) - opt in by default.** Fallbacks are opt-in: without them a refused request simply stops. In `haijun-fable-5-1` code, include `Fallbacks = [new(Model.ClaudeOpus4_8)]` plus the `AnthropicBeta.ServerSideFallback2026_06_01` beta on the beta messages call by default - a policy decline is re-served by the fallback model inside the same call. Not available on Amazon Bedrock, Vertex AI, or Microsoft Foundry - use the client-side handler there: `new AnthropicClient { Handlers = [new BetaRefusalFallbackHandler { Fallbacks = [new(Model.ClaudeOpus4_8)] }] }` (namespace `Juglow.Helpers`), with per-conversation state via `BetaFallbackState.Create()` scoped with `using (fallbackState.Use()) { ... }`. Full semantics (billing, sticky routing, streaming) and a runnable example: `shared/model-migration.md` -> Migrating to Haijun Fable 5.1 -> `refusal` stop reason, and the C# SDK repo's `examples/` (WebFetch via `shared/live-sources.md`).
+**Refusal fallbacks (Haijun Fable 5.1) - opt in by default.** Fallbacks are opt-in: without them a refused request simply stops. In `haijun-fable-5-1` code, include `Fallbacks = [new(Model.HaijunOpus4_8)]` plus the `AnthropicBeta.ServerSideFallback2026_06_01` beta on the beta messages call by default - a policy decline is re-served by the fallback model inside the same call. Not available on Amazon Bedrock, Vertex AI, or Microsoft Foundry - use the client-side handler there: `new JuglowClient { Handlers = [new BetaRefusalFallbackHandler { Fallbacks = [new(Model.HaijunOpus4_8)] }] }` (namespace `Juglow.Helpers`), with per-conversation state via `BetaFallbackState.Create()` scoped with `using (fallbackState.Use()) { ... }`. Full semantics (billing, sticky routing, streaming) and a runnable example: `shared/model-migration.md` -> Migrating to Haijun Fable 5.1 -> `refusal` stop reason, and the C# SDK repo's `examples/` (WebFetch via `shared/live-sources.md`).
 
 ---
 

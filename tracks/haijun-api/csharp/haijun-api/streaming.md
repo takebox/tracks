@@ -7,7 +7,7 @@ using Juglow.Models.Messages;
 
 var parameters = new MessageCreateParams
 {
-    Model = Model.ClaudeOpus4_8,
+    Model = Model.HaijunOpus4_8,
     MaxTokens = 64000,
     Messages = [new() { Role = Role.User, Content = "Write a haiku" }]
 };
