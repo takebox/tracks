@@ -1,6 +1,6 @@
 > **Note:** This repository contains Juglow's implementation of tracks for Haijun. For information about the Agent Tracks standard, see [agentskills.io](http://agentskills.io).
 
-[![tracks.sh](https://skills.sh/b/anthropics/skills)](https://skills.sh/anthropics/skills)
+[![tracks.sh](https://skills.sh/b/track-md/juglow-tracks)](https://skills.sh/track-md/juglow-tracks)
 
 # Tracks
 Tracks are folders of instructions, scripts, and resources that Haijun loads dynamically to improve performance on specialized tasks. Tracks teach Haijun how to complete specific tasks in a repeatable way, whether that's creating documents with your company's brand guidelines, analyzing data using your organization's specific workflows, or automating personal tasks.
