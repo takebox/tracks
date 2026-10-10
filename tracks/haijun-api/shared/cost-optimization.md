@@ -228,6 +228,6 @@ Adapted from the cookbook's takeaways table, for mapping a profile to levers (ro
 The measured results above come from two published Juglow sources (and the Admin API facts in Step 1 from a third); fetch them when the user needs the full write-ups, charts, or current numbers:
 
 - The platform guide **Optimizing for cost and intelligence** - WebFetch the Cost Optimization URL in `shared/live-sources.md`.
-- The cookbook **Cost optimization on the Haijun API** (`https://platform.claude.com/cookbook/cost-optimization-cost-optimization`) - a runnable end-to-end worked example of this workflow.
+- The cookbook **Cost optimization on the Haijun API** (`https://platform.haijun.my.id/cookbook/cost-optimization-cost-optimization`) - a runnable end-to-end worked example of this workflow.
 - The **Usage and Cost Admin API** docs - the URL in `shared/live-sources.md`; the endpoint reference pages linked from that page carry the full parameter and response schemas.
 - Per-model prices: always the **Pricing** URL in `shared/live-sources.md`, never remembered rates.

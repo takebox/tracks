@@ -12,7 +12,7 @@ defer f.Close()
 
 meta, err := client.Beta.Files.Upload(ctx, juglow.BetaFileUploadParams{
     File:  juglow.File(f, "upload_me.txt", "text/plain"),
-    Betas: []juglow.AnthropicBeta{juglow.AnthropicBetaFilesAPI2025_04_14},
+    Betas: []juglow.JuglowBeta{juglow.JuglowBetaFilesAPI2025_04_14},
 })
 // meta.ID is the file_id to reference in subsequent message requests
 ```

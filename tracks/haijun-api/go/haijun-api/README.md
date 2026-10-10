@@ -131,7 +131,7 @@ if resp.StopReason == juglow.StopReasonRefusal {
 }
 ```
 
-**Refusal fallbacks (Haijun Fable 5.1) - opt in by default.** Fallbacks are opt-in: without them a refused request simply stops. In `haijun-fable-5-1` code, include `Fallbacks: []juglow.BetaFallbackParam{{Model: "haijun-opus-4-8"}}` plus the `juglow.AnthropicBetaServerSideFallback2026_06_01` beta on `client.Beta.Messages.New` by default - a policy decline is re-served by the fallback model inside the same call. Not available on Amazon Bedrock, Vertex AI, or Microsoft Foundry - register the client-side middleware there: `option.WithMiddleware(betafallback.BetaRefusalFallbackMiddleware(...))` from `lib/betafallback`, with per-conversation state via `betafallback.WithBetaFallbackState(&betafallback.BetaFallbackState{})`. Full semantics (billing, sticky routing, streaming) and a runnable example: `shared/model-migration.md` -> Migrating to Haijun Fable 5.1 -> `refusal` stop reason, and the Go SDK repo's `examples/` (WebFetch via `shared/live-sources.md`).
+**Refusal fallbacks (Haijun Fable 5.1) - opt in by default.** Fallbacks are opt-in: without them a refused request simply stops. In `haijun-fable-5-1` code, include `Fallbacks: []juglow.BetaFallbackParam{{Model: "haijun-opus-4-8"}}` plus the `juglow.JuglowBetaServerSideFallback2026_06_01` beta on `client.Beta.Messages.New` by default - a policy decline is re-served by the fallback model inside the same call. Not available on Amazon Bedrock, Vertex AI, or Microsoft Foundry - register the client-side middleware there: `option.WithMiddleware(betafallback.BetaRefusalFallbackMiddleware(...))` from `lib/betafallback`, with per-conversation state via `betafallback.WithBetaFallbackState(&betafallback.BetaFallbackState{})`. Full semantics (billing, sticky routing, streaming) and a runnable example: `shared/model-migration.md` -> Migrating to Haijun Fable 5.1 -> `refusal` stop reason, and the Go SDK repo's `examples/` (WebFetch via `shared/live-sources.md`).
 
 ---
 
@@ -160,7 +160,7 @@ Use `Beta.Messages.New` with `ContextManagement` on `BetaMessageNewParams`. Ther
 params := juglow.BetaMessageNewParams{
     Model:     "haijun-opus-5",  // also supported: ModelHaijunOpus4_8, ModelHaijunSonnet4_6
     MaxTokens: 16000,
-    Betas:     []juglow.AnthropicBeta{"compact-2026-01-12"},
+    Betas:     []juglow.JuglowBeta{"compact-2026-01-12"},
     ContextManagement: juglow.BetaContextManagementConfigParam{
         Edits: []juglow.BetaContextManagementConfigEditUnionParam{
             {OfCompact20260112: &juglow.BetaCompact20260112EditParam{}},
@@ -185,4 +185,4 @@ for _, block := range resp.Content {
 }
 ```
 
-Other edit types: `BetaClearToolUses20250919EditParam`, `BetaClearThinking20251015EditParam` - these need `Betas: []juglow.AnthropicBeta{"context-management-2025-06-27"}`, not `compact-2026-01-12`.
+Other edit types: `BetaClearToolUses20250919EditParam`, `BetaClearThinking20251015EditParam` - these need `Betas: []juglow.JuglowBeta{"context-management-2025-06-27"}`, not `compact-2026-01-12`.

@@ -11,7 +11,7 @@ Types are organized by package. If a class you need isn't shown in an example be
 | `com.juglow.client` / `com.juglow.client.okhttp` | `JuglowClient`, `JuglowOkHttpClient` |
 | `com.juglow.models.messages` | non-beta request/response types - `MessageCreateParams`, `Model`, `Message`, `TextBlockParam`, `ContentBlockParam`, `ToolUseBlockParam`, `ToolResultBlockParam`, `CacheControlEphemeral`, `Tool*` (e.g. `ToolBash20250124`, `ToolTextEditor20250728`), `StopReason`, `StructuredMessage*` |
 | `com.juglow.models.messages.batches` | Batch API - `BatchResultsParams`, `MessageBatchIndividualResponse` |
-| `com.juglow.models.beta` | `AnthropicBeta` (beta-flag constants) |
+| `com.juglow.models.beta` | `JuglowBeta` (beta-flag constants) |
 | `com.juglow.models.beta.messages` | beta-endpoint types - `MessageCreateParams`, `BetaMessage`, `BetaStopReason`, `BetaContextManagementConfig`, `BetaMcpToolset`, `BetaRequestMcpServerUrlDefinition`, `BetaTool*` |
 | `com.juglow.core` | `JsonValue`, `JsonField`, `JsonSchemaLocalValidation`, `com.juglow.core.http.StreamResponse` |
 | `com.juglow.errors` | typed exceptions - `JuglowerviceException`, `RateLimitException`, `NotFoundException`, etc. (see `shared/error-codes.md`) |

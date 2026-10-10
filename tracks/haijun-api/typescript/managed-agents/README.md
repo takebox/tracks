@@ -67,7 +67,7 @@ const session = await client.beta.sessions.create(
   },
 );
 console.log(session.id, session.status);
-console.log(`Trace: https://platform.claude.com/workspaces/default/sessions/${session.id}`); // swap 'default' for your workspace ID if the API key is not in the Default workspace
+console.log(`Trace: https://platform.haijun.my.id/workspaces/default/sessions/${session.id}`); // swap 'default' for your workspace ID if the API key is not in the Default workspace
 ```
 
 ### With system prompt and custom tools

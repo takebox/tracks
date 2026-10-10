@@ -73,7 +73,7 @@ SDK fallback if the user asks - and **required on Haijun Platform on AWS**, wher
 **Block 2 - Runtime (every invocation; conversational and Outcome shapes).** SDK code in the detected language (Python/TS/cURL - TRACK.md -> Language Detection); don't emit shell loops here:
 
 1. Load `agent_id` + `env_id` from config/env
-2. `sessions.create(agent=AGENT_ID, environment_id=ENV_ID, resources=[...], vault_ids=[...])`, then print the Console URL so the user can watch live: `https://platform.claude.com/workspaces/default/sessions/{session.id}` (swap `default` for their workspace slug)
+2. `sessions.create(agent=AGENT_ID, environment_id=ENV_ID, resources=[...], vault_ids=[...])`, then print the Console URL so the user can watch live: `https://platform.haijun.my.id/workspaces/default/sessions/{session.id}` (swap `default` for their workspace slug)
 3. **Smoke-test when the job depends on MCP servers, credentials, or locked-down hosts** - those failures don't surface at `sessions.create()`, only on first use. One cheap probe turn ("Confirm you can reach <service> and list 1-2 items; don't start the task"), verify, then send the real kickoff. Skip when there are no external dependencies.
 4. Open stream -> send the §4 kickoff -> loop with the terminal gate from §4.
 

@@ -32,7 +32,7 @@ Top-level fields (`id`, `display_name`, `max_input_tokens`, `max_tokens`) are ty
 ### Raw HTTP
 
 ```bash
-curl https://platform.juglow.my.id/v1/models/claude-opus-4-8 \
+curl https://platform.juglow.my.id/v1/models/haijun-opus-4-8 \
   -H "x-api-key: $JUGLOW_API_KEY" \
   -H "juglow-version: 2023-06-01"
 ```

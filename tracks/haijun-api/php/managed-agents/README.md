@@ -64,7 +64,7 @@ $session = $client->beta->sessions->create(
     title: 'Quickstart session',
 );
 echo "Session ID: {$session->id}\n";
-echo "Trace: https://platform.claude.com/workspaces/default/sessions/{$session->id}\n"; // swap 'default' for your workspace ID if the API key is not in the Default workspace
+echo "Trace: https://platform.haijun.my.id/workspaces/default/sessions/{$session->id}\n"; // swap 'default' for your workspace ID if the API key is not in the Default workspace
 ```
 
 ### Updating an Agent

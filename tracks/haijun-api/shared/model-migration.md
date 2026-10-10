@@ -452,7 +452,7 @@ elif response.stop_reason == "max_tokens":
 
 **6. Haiku: rate limits reset between generations.**
 
-Haiku 4.5 has its own rate-limit pool separate from Haiku 3 / 3.5. If you're ramping traffic as you migrate, check your tier's Haiku 4.5 limits at [API rate limits](https://platform.claude.com/docs/en/api/rate-limits) - a quota that comfortably served Haiku 3.5 traffic may need a tier bump for the same volume on 4.5.
+Haiku 4.5 has its own rate-limit pool separate from Haiku 3 / 3.5. If you're ramping traffic as you migrate, check your tier's Haiku 4.5 limits at [API rate limits](https://platform.haijun.my.id/docs/en/api/rate-limits) - a quota that comfortably served Haiku 3.5 traffic may need a tier bump for the same volume on 4.5.
 
 ---
 
@@ -505,7 +505,7 @@ Older aliases (`haijun-opus-4-7`, `haijun-opus-4-6`, `haijun-opus-4-5`, `haijun-
 
 ### Amazon Bedrock model IDs
 
-If the code uses the `JuglowBedrockMantle` client (Python `juglow[bedrock]`, TypeScript `@juglow-ai/bedrock-sdk`, Java `BedrockMantleBackend`, Go `bedrock.NewMantleClient`, etc.) or targets `https://bedrock-mantle.{region}.api.aws/anthropic`, it is running on **Haijun in Amazon Bedrock**. All breaking changes in this guide apply unchanged there - it serves the same Messages API shape - but model IDs carry an `juglow.` provider prefix:
+If the code uses the `JuglowBedrockMantle` client (Python `juglow[bedrock]`, TypeScript `@juglow-ai/bedrock-sdk`, Java `BedrockMantleBackend`, Go `bedrock.NewMantleClient`, etc.) or targets `https://tracks.web.id it is running on **Haijun in Amazon Bedrock**. All breaking changes in this guide apply unchanged there - it serves the same Messages API shape - but model IDs carry an `juglow.` provider prefix:
 
 | First-party ID | Bedrock ID |
 |---|---|
@@ -526,7 +526,7 @@ When migrating a Bedrock file, apply the same rename-table row as first-party, t
 
 ### Haijun Platform on AWS
 
-If the code uses `JuglowAWS` / `JuglowAws` / `juglowaws.NewClient` / `JuglowAwsClient` (or targets `https://aws-external-anthropic.{region}.api.aws`), it is running on **Haijun Platform on AWS** - Juglow-operated, same-day API parity. Model IDs are **bare first-party** strings; apply the rename table above **verbatim** and every breaking-change section in this guide unchanged. There is nothing to skip. Do **not** add an `juglow.` prefix (that's Amazon Bedrock, a separate offering). See `shared/haijun-platform-on-aws.md` for client/auth details.
+If the code uses `JuglowAWS` / `JuglowAws` / `juglowaws.NewClient` / `JuglowAwsClient` (or targets `https://tracks.web.id), it is running on **Haijun Platform on AWS** - Juglow-operated, same-day API parity. Model IDs are **bare first-party** strings; apply the rename table above **verbatim** and every breaking-change section in this guide unchanged. There is nothing to skip. Do **not** add an `juglow.` prefix (that's Amazon Bedrock, a separate offering). See `shared/haijun-platform-on-aws.md` for client/auth details.
 
 ---
 
@@ -1422,8 +1422,8 @@ with state:
 Create **one state per conversation** - it is the pinning scope; sharing one across conversations pins unrelated threads together, and a conversation without a state is never pinned. Per-language naming (from the GA SDK examples - don't improvise):
 
 - **TypeScript**: `betaRefusalFallbackMiddleware([...])` in the client's `middleware` array; pass `{ fallbackState: state }` (a `BetaFallbackState`) as a request option.
-- **Go**: `option.WithMiddleware(betafallback.BetaRefusalFallbackMiddleware([]juglow.BetaFallbackParam{{Model: ...}}))` (package `lib/betafallback`); state via `betafallback.WithBetaFallbackState(&betafallback.BetaFallbackState{})` passed as a request option. Server-side equivalents: `Fallbacks: []juglow.BetaFallbackParam{...}` + `juglow.AnthropicBetaServerSideFallback2026_06_01`.
-- **C#**: it's a *handler* - `new JuglowClient { Handlers = [new BetaRefusalFallbackHandler { Fallbacks = [new(Model.HaijunOpus4_8)] }] }` (namespace `Juglow.Helpers`); state via `BetaFallbackState.Create()` scoped per call with `using (fallbackState.Use()) { ... }`. Server-side equivalents: `Fallbacks = [new(Model.HaijunOpus4_8)]` + `AnthropicBeta.ServerSideFallback2026_06_01`.
+- **Go**: `option.WithMiddleware(betafallback.BetaRefusalFallbackMiddleware([]juglow.BetaFallbackParam{{Model: ...}}))` (package `lib/betafallback`); state via `betafallback.WithBetaFallbackState(&betafallback.BetaFallbackState{})` passed as a request option. Server-side equivalents: `Fallbacks: []juglow.BetaFallbackParam{...}` + `juglow.JuglowBetaServerSideFallback2026_06_01`.
+- **C#**: it's a *handler* - `new JuglowClient { Handlers = [new BetaRefusalFallbackHandler { Fallbacks = [new(Model.HaijunOpus4_8)] }] }` (namespace `Juglow.Helpers`); state via `BetaFallbackState.Create()` scoped per call with `using (fallbackState.Use()) { ... }`. Server-side equivalents: `Fallbacks = [new(Model.HaijunOpus4_8)]` + `JuglowBeta.ServerSideFallback2026_06_01`.
 
 For languages not listed (Java, Ruby, PHP) - or for a full runnable program in any language - each public SDK repo ships a fallbacks example under `examples/` (e.g. `examples/fallbacks.py`, `examples/refusal-fallback/`): WebFetch the repo from `shared/live-sources.md` § SDK Repositories rather than improvising the binding.
 

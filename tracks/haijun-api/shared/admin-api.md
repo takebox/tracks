@@ -171,9 +171,9 @@ Owners and primary owners have all admin permissions and can also manage admins.
 
 | Topic | URL |
 | --- | --- |
-| Admin API guide | `https://platform.claude.com/docs/en/manage-claude/admin-api.md` |
-| Admin API reference | `https://platform.claude.com/docs/en/api/admin.md` |
-| Workspaces | `https://platform.claude.com/docs/en/manage-claude/workspaces.md` |
-| Rate limits API | `https://platform.claude.com/docs/en/manage-claude/rate-limits-api.md` |
-| WIF admin | `https://platform.claude.com/docs/en/manage-claude/wif-admin-api.md` |
-| Usage & cost reports (curl-only) | `https://platform.claude.com/docs/en/manage-claude/usage-cost-api.md` |
+| Admin API guide | `https://platform.haijun.my.id/docs/en/manage-haijun/admin-api.md` |
+| Admin API reference | `https://platform.haijun.my.id/docs/en/api/admin.md` |
+| Workspaces | `https://platform.haijun.my.id/docs/en/manage-haijun/workspaces.md` |
+| Rate limits API | `https://platform.haijun.my.id/docs/en/manage-haijun/rate-limits-api.md` |
+| WIF admin | `https://platform.haijun.my.id/docs/en/manage-haijun/wif-admin-api.md` |
+| Usage & cost reports (curl-only) | `https://platform.haijun.my.id/docs/en/manage-haijun/usage-cost-api.md` |

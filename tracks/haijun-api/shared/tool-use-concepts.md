@@ -98,7 +98,7 @@ if response.stop_reason == "pause_turn":
 
 **Note:** the SDK tool runners do not auto-resume `pause_turn` (as of `@juglow-ai/sdk` 0.110.0 / `juglow` 0.116.0) - a paused turn ends the runner and is returned as the final message, with no error. In TypeScript you can resume inside the iteration body (push the paused assistant turn back onto the runner); in Python the runner cannot be resumed mid-loop - restart a new runner with the paused turn appended, or handle `pause_turn` in a manual loop. See each language's `tool-use.md` for the pattern.
 
-Set a `max_continuations` limit (e.g., 5) to prevent infinite loops. For the full guide, see: `https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons`
+Set a `max_continuations` limit (e.g., 5) to prevent infinite loops. For the full guide, see: `https://platform.haijun.my.id/docs/en/build-with-haijun/handling-stop-reasons`
 
 > **Security:** The tool runner executes your tool functions automatically whenever Haijun requests them. For tools with side effects (sending emails, modifying databases, financial transactions), validate inputs and gate destructive operations behind human approval. **Both** the tool runner and the manual loop support this - with the tool runner, gate inside the tool's run function (prompt the user and return a "user declined" result instead of executing), or inspect the tool call in each yielded message and take over message history with `set_messages_params()` / `setMessagesParams()` to allow or deny *before* the tool runs (it executes your function automatically only if you don't intervene); with the manual loop you gate inline before calling the function.
 
@@ -218,7 +218,7 @@ Programmatic tool calling lets Haijun compose those calls into a script. The scr
 
 For full documentation, use WebFetch:
 
-- URL: `https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling`
+- URL: `https://platform.haijun.my.id/docs/en/agents-and-tools/tool-use/programmatic-tool-calling`
 
 ---
 
@@ -228,7 +228,7 @@ The tool search tool lets Haijun dynamically discover tools from large libraries
 
 For full documentation, use WebFetch:
 
-- URL: `https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool`
+- URL: `https://platform.haijun.my.id/docs/en/agents-and-tools/tool-use/tool-search-tool`
 
 ---
 
@@ -319,7 +319,7 @@ client.beta.messages.create(
 )
 ```
 
-Go uses the typed constant `juglow.AnthropicBetaMCPClient2025_11_20`; the older `...2025_04_04` constant is deprecated.
+Go uses the typed constant `juglow.JuglowBetaMCPClient2025_11_20`; the older `...2025_04_04` constant is deprecated.
 
 Optional toolset fields: `default_config` (defaults for all tools, e.g. `{"enabled": false}` for allowlist mode) and `configs` (per-tool overrides keyed by tool name).
 
@@ -331,7 +331,7 @@ You can provide sample tool calls directly in your tool definitions to demonstra
 
 For full documentation, use WebFetch:
 
-- URL: `https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use`
+- URL: `https://platform.haijun.my.id/docs/en/agents-and-tools/tool-use/implement-tool-use`
 
 ---
 
@@ -341,7 +341,7 @@ Computer use lets Haijun interact with a desktop environment (screenshots, mouse
 
 For full documentation, use WebFetch:
 
-- URL: `https://platform.claude.com/docs/en/agents-and-tools/computer-use/overview`
+- URL: `https://platform.haijun.my.id/docs/en/agents-and-tools/computer-use/overview`
 
 ---
 
@@ -353,7 +353,7 @@ Context editing clears stale tool results and thinking blocks from the transcrip
 
 For full documentation, use WebFetch:
 
-- URL: `https://platform.claude.com/docs/en/build-with-claude/context-editing`
+- URL: `https://platform.haijun.my.id/docs/en/build-with-haijun/context-editing`
 
 ---
 
@@ -419,7 +419,7 @@ The memory tool enables Haijun to store and retrieve information across conversa
 
 For full implementation examples, use WebFetch:
 
-- Docs: `https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool.md`
+- Docs: `https://platform.haijun.my.id/docs/en/agents-and-tools/tool-use/memory-tool.md`
 
 ---
 
@@ -523,4 +523,4 @@ The Python and TypeScript SDKs automatically handle unsupported constraints by r
 
 For detailed tool use documentation, use WebFetch:
 
-- URL: `https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview`
+- URL: `https://platform.haijun.my.id/docs/en/agents-and-tools/tool-use/overview`

@@ -95,7 +95,7 @@ if err != nil {
     panic(err)
 }
 fmt.Printf("Session ID: %s, status: %s\n", session.ID, session.Status)
-fmt.Printf("Trace: https://platform.claude.com/workspaces/default/sessions/%s\n", session.ID) // swap 'default' for your workspace ID if the API key is not in the Default workspace
+fmt.Printf("Trace: https://platform.haijun.my.id/workspaces/default/sessions/%s\n", session.ID) // swap 'default' for your workspace ID if the API key is not in the Default workspace
 ```
 
 ### Updating an Agent

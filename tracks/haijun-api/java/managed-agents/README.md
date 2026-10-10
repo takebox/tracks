@@ -75,7 +75,7 @@ var session = client.beta().sessions().create(SessionCreateParams.builder()
     .title("Quickstart session")
     .build());
 System.out.println("Session ID: " + session.id());
-System.out.println("Trace: https://platform.claude.com/workspaces/default/sessions/" + session.id()); // swap 'default' for your workspace ID if the API key is not in the Default workspace
+System.out.println("Trace: https://platform.haijun.my.id/workspaces/default/sessions/" + session.id()); // swap 'default' for your workspace ID if the API key is not in the Default workspace
 ```
 
 ### Updating an Agent

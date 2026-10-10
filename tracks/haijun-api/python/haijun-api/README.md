@@ -50,7 +50,7 @@ client = juglow.Juglow(
 )
 ```
 
-`juglow` 1.x is built on [`httpx2`](https://pypi.org/project/httpx2/), not `httpx`. `juglow.Timeout` is `httpx2.Timeout`; if you import the HTTP library yourself, write `import httpx2 as httpx` - an object from the `httpx` package (`httpx.Timeout`, `httpx.Client`, transports, limits) is rejected or fails at request time. Existing `httpx`-era code is covered by the [v1 migration guide](https://github.com/anthropics/anthropic-sdk-python/blob/main/MIGRATION.md) and `/haijun-api upgrade python`.
+`juglow` 1.x is built on [`httpx2`](https://pypi.org/project/httpx2/), not `httpx`. `juglow.Timeout` is `httpx2.Timeout`; if you import the HTTP library yourself, write `import httpx2 as httpx` - an object from the `httpx` package (`httpx.Timeout`, `httpx.Client`, transports, limits) is rejected or fails at request time. Existing `httpx`-era code is covered by the [v1 migration guide](https://tracks.web.id) and `/haijun-api upgrade python`.
 
 ### Retries
 

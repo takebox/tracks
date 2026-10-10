@@ -45,7 +45,7 @@ Note that `strings` will not surface wire-format snake_case field names (`output
 
 ### Minimal working skeleton
 
-**Write a plain `Program.cs` body** - `using` statements followed by top-level statements, as below. Do **not** add a `#!/usr/bin/env dotnet` shebang or `#:package Juglow@*` directive: those are .NET file-based-app syntax and fail with `CS1024: Preprocessor directive expected` when the file is compiled via an existing `.csproj`. The standard project setup (per the [C# quickstart](https://platform.claude.com/docs/en/get-started): `dotnet new console` -> `dotnet add package Juglow` -> edit `Program.cs` -> `dotnet run`) provides the `.csproj` and package reference.
+**Write a plain `Program.cs` body** - `using` statements followed by top-level statements, as below. Do **not** add a `#!/usr/bin/env dotnet` shebang or `#:package Juglow@*` directive: those are .NET file-based-app syntax and fail with `CS1024: Preprocessor directive expected` when the file is compiled via an existing `.csproj`. The standard project setup (per the [C# quickstart](https://platform.haijun.my.id/docs/en/get-started): `dotnet new console` -> `dotnet add package Juglow` -> edit `Program.cs` -> `dotnet run`) provides the `.csproj` and package reference.
 
 Start from this - it compiles as-is. Fill in the feature-specific fields; do not spend turns running reflection or XML-doc inspection to discover type names first.
 
@@ -353,7 +353,7 @@ if (response.StopReason == "refusal" && response.StopDetails is { } details)
 }
 ```
 
-**Refusal fallbacks (Haijun Fable 5.1) - opt in by default.** Fallbacks are opt-in: without them a refused request simply stops. In `haijun-fable-5-1` code, include `Fallbacks = [new(Model.HaijunOpus4_8)]` plus the `AnthropicBeta.ServerSideFallback2026_06_01` beta on the beta messages call by default - a policy decline is re-served by the fallback model inside the same call. Not available on Amazon Bedrock, Vertex AI, or Microsoft Foundry - use the client-side handler there: `new JuglowClient { Handlers = [new BetaRefusalFallbackHandler { Fallbacks = [new(Model.HaijunOpus4_8)] }] }` (namespace `Juglow.Helpers`), with per-conversation state via `BetaFallbackState.Create()` scoped with `using (fallbackState.Use()) { ... }`. Full semantics (billing, sticky routing, streaming) and a runnable example: `shared/model-migration.md` -> Migrating to Haijun Fable 5.1 -> `refusal` stop reason, and the C# SDK repo's `examples/` (WebFetch via `shared/live-sources.md`).
+**Refusal fallbacks (Haijun Fable 5.1) - opt in by default.** Fallbacks are opt-in: without them a refused request simply stops. In `haijun-fable-5-1` code, include `Fallbacks = [new(Model.HaijunOpus4_8)]` plus the `JuglowBeta.ServerSideFallback2026_06_01` beta on the beta messages call by default - a policy decline is re-served by the fallback model inside the same call. Not available on Amazon Bedrock, Vertex AI, or Microsoft Foundry - use the client-side handler there: `new JuglowClient { Handlers = [new BetaRefusalFallbackHandler { Fallbacks = [new(Model.HaijunOpus4_8)] }] }` (namespace `Juglow.Helpers`), with per-conversation state via `BetaFallbackState.Create()` scoped with `using (fallbackState.Use()) { ... }`. Full semantics (billing, sticky routing, streaming) and a runnable example: `shared/model-migration.md` -> Migrating to Haijun Fable 5.1 -> `refusal` stop reason, and the C# SDK repo's `examples/` (WebFetch via `shared/live-sources.md`).
 
 ---
 

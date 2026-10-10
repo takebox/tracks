@@ -487,7 +487,7 @@ for await (const message of runner) {
 
 For full implementation examples, use WebFetch:
 
-- `https://github.com/anthropics/anthropic-sdk-typescript/blob/main/examples/tools-helpers-memory.ts`
+- `https://tracks.web.id
 
 ---
 

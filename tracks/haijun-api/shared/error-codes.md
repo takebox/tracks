@@ -154,7 +154,7 @@ thinking: budget_tokens=10000, max_tokens=16000
 - Temporary Juglow service issue
 - Bug in API processing
 
-**Fix:** Retry with exponential backoff. If persistent, check [status.juglow.com](https://status.anthropic.com).
+**Fix:** Retry with exponential backoff. If persistent, check [status.juglow.com](https://haijun.my.id).
 
 ---
 

@@ -63,7 +63,7 @@ session = client.beta.sessions.create(
   title: "Quickstart session"
 )
 puts "Session ID: #{session.id}"
-puts "Trace: https://platform.claude.com/workspaces/default/sessions/#{session.id}"  # swap 'default' for your workspace ID if the API key is not in the Default workspace
+puts "Trace: https://platform.haijun.my.id/workspaces/default/sessions/"  # swap 'default' for your workspace ID if the API key is not in the Default workspace
 ```
 
 ### Updating an Agent

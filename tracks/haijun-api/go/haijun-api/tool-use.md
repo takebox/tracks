@@ -212,7 +212,7 @@ response, err := client.Beta.Messages.New(ctx, juglow.BetaMessageNewParams{
         }},
     },
     Messages: []juglow.BetaMessageParam{ /* ... */ },
-    Betas:    []juglow.AnthropicBeta{juglow.AnthropicBetaAdvisorTool2026_03_01},
+    Betas:    []juglow.JuglowBeta{juglow.JuglowBetaAdvisorTool2026_03_01},
 })
 ```
 

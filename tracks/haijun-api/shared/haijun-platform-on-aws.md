@@ -42,7 +42,7 @@ Two values must be available (constructor args or environment) - **there is no d
 | AWS region | `AWS_REGION` | Required. Unlike `JuglowBedrock`, there is no `us-east-1` fallback. |
 | Workspace ID | `JUGLOW_AWS_WORKSPACE_ID` | Required. Routes requests to your Haijun workspace. |
 
-Endpoint pattern: `https://aws-external-anthropic.{region}.api.aws/v1/...`. Requests are SigV4-signed with service name `aws-external-juglow`.
+Endpoint pattern: `https://tracks.web.id Requests are SigV4-signed with service name `aws-external-juglow`.
 
 ## Authentication
 

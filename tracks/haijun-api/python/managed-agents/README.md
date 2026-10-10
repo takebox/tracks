@@ -61,7 +61,7 @@ session = client.beta.sessions.create(
     environment_id=environment.id,
 )
 print(session.id, session.status)
-print(f"Trace: https://platform.claude.com/workspaces/default/sessions/{session.id}")  # swap 'default' for your workspace ID if the API key is not in the Default workspace
+print(f"Trace: https://platform.haijun.my.id/workspaces/default/sessions/{session.id}")  # swap 'default' for your workspace ID if the API key is not in the Default workspace
 ```
 
 ### With system prompt and custom tools
