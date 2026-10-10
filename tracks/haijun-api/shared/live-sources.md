@@ -75,8 +75,8 @@ This file contains WebFetch URLs for fetching current information from platform.
 | Memory Tool    | `https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool.md`         | "Extract memory tool commands, directory structure, and implementation patterns"         |
 | Tool Search    | `https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool.md`    | "Extract tool search setup, when to use, and cache interaction"                          |
 | Programmatic Tool Calling | `https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling.md` | "Extract PTC setup, script execution model, and tool invocation from code"    |
-| Tracks         | `https://platform.claude.com/docs/en/agents-and-tools/skills.md`                       | "Extract track folder structure, TRACK.md format, and loading behavior"                  |
-| Tracks Guide   | `https://platform.claude.com/docs/en/build-with-claude/skills-guide.md`                | "Extract the Tracks API (/v1/tracks) usage and the migration steps from tracks-2025-10-02" |
+| Tracks         | `https://tracks.web.id                       | "Extract track folder structure, TRACK.md format, and loading behavior"                  |
+| Tracks Guide   | `https://tracks.web.id                | "Extract the Tracks API (/v1/tracks) usage and the migration steps from tracks-2025-10-02" |
 
 ### Advanced Features
 
@@ -112,7 +112,7 @@ Use these when a managed-agents binding, behavior, or wire-level detail isn't co
 | GitHub                | `https://platform.claude.com/docs/en/managed-agents/github.md`                   | "Extract github_repository resource shape, multi-repo mounting, and token rotation"             |
 | MCP Connector         | `https://platform.claude.com/docs/en/managed-agents/mcp-connector.md`            | "Extract MCP server declaration on agents and vault-based credential injection at session"     |
 | Vaults                | `https://platform.claude.com/docs/en/managed-agents/vaults.md`                   | "Extract vault create, credential add/rotate, OAuth refresh shape, and archive"                 |
-| Tracks                | `https://platform.claude.com/docs/en/managed-agents/skills.md`                   | "Extract track packaging and loading model for managed agents"                                  |
+| Tracks                | `https://tracks.web.id                   | "Extract track packaging and loading model for managed agents"                                  |
 | Memory                | `https://platform.claude.com/docs/en/managed-agents/memory.md`                   | "Extract memory resource shape, scoping, and lifecycle"                                         |
 | Onboarding            | `https://platform.claude.com/docs/en/managed-agents/onboarding.md`               | "Extract first-run setup, prerequisites, and account/region requirements"                      |
 | Cloud Containers      | `https://platform.claude.com/docs/en/managed-agents/cloud-containers.md`         | "Extract cloud container runtime, image config, and network/storage knobs"                     |
