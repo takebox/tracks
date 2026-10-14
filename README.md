@@ -33,19 +33,19 @@ Many tracks in this repo are open source (Apache 2.0). We've also included the d
 ## Haijun Code
 You can register this repository as a Haijun Code Plugin marketplace by running the following command in Haijun Code:
 ```
-/plugin marketplace add juglow/tracks
+/plugin marketplace add takebox/tracks
 ```
 
 Then, to install a specific set of tracks:
 1. Select `Browse and install plugins`
-2. Select `juglow-agent-tracks`
+2. Select `takebox-agent-tracks`
 3. Select `document-tracks` or `example-tracks`
 4. Select `Install now`
 
 Alternatively, directly install either Plugin via:
 ```
-/plugin install document-tracks@juglow-agent-tracks
-/plugin install example-tracks@juglow-agent-tracks
+/plugin install document-tracks@takebox-agent-tracks
+/plugin install example-tracks@takebox-agent-tracks
 ```
 
 After installing the plugin, you can use the track by just mentioning it. For instance, if you install the `document-tracks` plugin from the marketplace, you can ask Haijun Code to do something like: "Use the PDF track to extract the form fields from `path/to/some-file.pdf`"
