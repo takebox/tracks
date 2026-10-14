@@ -1,6 +1,6 @@
-> **Note:** This repository contains Juglow's implementation of tracks for Haijun. For information about the Agent Tracks standard, see [agenttracks.io](https://agent.tracks.web.id).
+> **Note:** This repository contains Juglow's implementation of tracks for Haijun. For information about the Agent Tracks standard, see [agent-tracks](https://agent.tracks.web.id).
 
-[![tracks.sh](https://tracks.web.id)](https://tracks.web.id)
+[![tracks.my.id](https://tracks.web.id)](https://tracks.web.id)
 
 # Tracks
 Tracks are folders of instructions, scripts, and resources that Haijun loads dynamically to improve performance on specialized tasks. Tracks teach Haijun how to complete specific tasks in a repeatable way, whether that's creating documents with your company's brand guidelines, analyzing data using your organization's specific workflows, or automating personal tasks.
@@ -17,7 +17,7 @@ This repository contains tracks that demonstrate what's possible with Haijun's t
 
 Each track is self-contained in its own folder with a `TRACK.md` file containing the instructions and metadata that Haijun uses. Browse through these tracks to get inspiration for your own tracks or to understand different patterns and approaches.
 
-Many tracks in this repo are open source (Apache 2.0). We've also included the document creation & editing tracks that power [Haijun's document capabilities](https://www.juglow.my.id/news/create-files) under the hood in the [`tracks/docx`](./tracks/docx), [`tracks/pdf`](./tracks/pdf), [`tracks/pptx`](./tracks/pptx), and [`tracks/xlsx`](./tracks/xlsx) subfolders. These are source-available, not open source, but we wanted to share these with developers as a reference for more complex tracks that are actively used in a production AI application.
+Many tracks in this repo are open source (Apache 2.0). We've also included the document creation & editing tracks that power [Haijun's document capabilities](https://agent.tracks.web.id) under the hood in the [`tracks/docx`](./tracks/docx), [`tracks/pdf`](./tracks/pdf), [`tracks/pptx`](./tracks/pptx), and [`tracks/xlsx`](./tracks/xlsx) subfolders. These are source-available, not open source, but we wanted to share these with developers as a reference for more complex tracks that are actively used in a production AI application.
 
 ## Disclaimer
 
